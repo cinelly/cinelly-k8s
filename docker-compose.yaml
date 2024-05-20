@@ -1,0 +1,45 @@
+services:
+  expertise:
+    container_name: expertise
+    build:
+      context: .
+      dockerfile: ./apps/expertise/Dockerfile
+      target: development
+    command: pnpm run start:dev expertise
+    env_file:
+      - ./apps/expertise/.env
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/app
+  job:
+    container_name: job
+    build:
+      context: .
+      dockerfile: ./apps/job/Dockerfile
+      target: development
+    command: pnpm run start:dev job
+    env_file:
+      - ./apps/job/.env
+    ports:
+      - '3002:3002'
+    volumes:
+      - .:/usr/src/app
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+#  user:
+#    build:
+#      context: .
+#      dockerfile: ./apps/user/Dockerfile
+#      target: development
+#    command: pnpm run start:dev user
+#    env_file:
+#      - ./apps/user/.env
+#    ports:
+#      - '3003:3003'
+#    volumes:
+#      - .:/usr/src/app
